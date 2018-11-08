@@ -1,0 +1,19 @@
+{
+    "name": "dracks/smsmode",
+    "description": "composer package for smsmode api",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dracks",
+            "email": "vanhem_n@etna-alternance.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-0": {
+            "SmsMode": "src/"
+        }
+    }
+}
