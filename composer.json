@@ -9,7 +9,7 @@
             "email": "vanhem_n@etna-alternance.net"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {},
     "autoload": {
         "psr-0": {
