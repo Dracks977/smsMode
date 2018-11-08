@@ -101,7 +101,7 @@ class SmsMode
 	private function handleReponse ($result)
 	{
 		$r = explode(" | ", $result);
-		if (count($r) != 1){
+		if (count($r) != 1) {
 			$obj = (object) [
 				'code' => $r[0],
 				'msg' => $this->code[$r[0]],
