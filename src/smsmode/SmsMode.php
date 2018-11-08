@@ -73,8 +73,9 @@ class SmsMode
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		}
 		$result = curl_exec($ch);
-		if ($result == false)
+		if ($result == false) {
 			return curl_error($ch);
+		}
 		return $this->handleReponse($result);
 	}
 
@@ -108,7 +109,7 @@ class SmsMode
 				'desc' => $r[1],
 				'smsID' => $r[2] ? $r[2] : null
 			];
-		return $obj;
+			return $obj;
 		}
 		// spécifique pour le get solde
 		return (object) ['code' => '0', 'msg' => $result];
