@@ -15,25 +15,29 @@ class SmsMode
 		'50' => 'Temporairement inaccessible'
 	];
 
-	public function __construct($apikey, $secure = true, $emetteur = NULL) {
+	public function __construct($apikey, $secure = true, $emetteur = NULL)
+	{
 		$this->api = $apikey;
 		$this->emetteur = $emetteur;
 		$this->secure = $secure;
 	}
 
 	//num separed by , / text of sms / stop default null
-	public function send($num, $texte, $stop = NULL) {
+	public function send($num, $texte, $stop = NULL)
+	{
 		$url = 'https://api.smsmode.com/http/1.6/sendSMS.do';
 		$texte = iconv("UTF-8", "ISO-8859-15", $texte);
 		$fields_string = 'accessToken='.$this->api.'&message='.urlencode($texte).'&numero='.$num;
 
 		// stop sms default no
-		if (!is_null($stop))
+		if (!is_null($stop)) {
 			$fields_string .= '&stop=1';
+		}
 
 		// emetteur default null == default emetteur
-		if (!is_null($this->emetteur))
+		if (!is_null($this->emetteur)) {
 			$fields_string .= '&emetteur='.$this->emetteur;
+		}
 
 		$ch = curl_init();
 
@@ -48,14 +52,16 @@ class SmsMode
 		}
 		
 		$result = curl_exec($ch);
-		if ($result == false)
+		if ($result == false) {
 			return curl_error($ch);
+		}
 
 		curl_close($ch);
 		return $this->handleReponse($result);
 	}
 
-	public function getSolde () {
+	public function getSolde ()
+	{
 		$url = 'https://api.smsmode.com/http/1.6/credit.do?accessToken=' . $this->api;
 		$ch = curl_init();
 
@@ -72,31 +78,36 @@ class SmsMode
 		return $this->handleReponse($result);
 	}
 
-	public function setEmetteur ($e) {
+	public function setEmetteur ($e)
+	{
 		$this->emetteur = $e;
 	}
 
-	public function getEmetteur () {
+	public function getEmetteur ()
+	{
 		return $this->emetteur;
 	}
 
-	public function setSecure ($e) {
+	public function setSecure ($e)
+	{
 		$this->secure = $e;
 	}
 
-	public function getSecure () {
+	public function getSecure ()
+	{
 		return $this->secure;
 	}
 
-	private function handleReponse ($result) {
+	private function handleReponse ($result)
+	{
 		$r = explode(" | ", $result);
 		if (count($r) != 1){
 			$obj = (object) [
-			'code' => $r[0],
-			'msg' => $this->code[$r[0]],
-			'desc' => $r[1],
-			'smsID' => $r[2] ? $r[2] : null
-		];
+				'code' => $r[0],
+				'msg' => $this->code[$r[0]],
+				'desc' => $r[1],
+				'smsID' => $r[2] ? $r[2] : null
+			];
 		return $obj;
 		}
 		// spécifique pour le get solde
