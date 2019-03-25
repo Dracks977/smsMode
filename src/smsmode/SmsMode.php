@@ -26,6 +26,7 @@ class SmsMode
 	public function send($num, $texte, $stop = NULL)
 	{
 		$url = 'https://api.smsmode.com/http/1.6/sendSMS.do';
+		$texte = addslashes($texte);
 		$texte = iconv("UTF-8", "ISO-8859-15", $texte);
 		$fields_string = 'accessToken='.$this->api.'&message='.urlencode($texte).'&numero='.$num;
 
